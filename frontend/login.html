@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h2>Iniciar Sesión</h2>
+
+<input id="correo" placeholder="Correo"><br>
+<input id="contrasena" type="password" placeholder="Contraseña"><br>
+<button onclick="login()">Entrar</button>
+<p id="errorLogin" style="color:red;"></p>
+
+<p id="recuperar" style="display:none;">
+  <a href="recuperar.html">¿Olvidaste tu contraseña?</a>
+</p>
+
+<p><a href="registro.html">Registrarse</a></p>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

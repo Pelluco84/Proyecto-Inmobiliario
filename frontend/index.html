@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inmobiliaria</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h1>Portal Inmobiliario</h1>
+
+<nav id="menu" class="barra-usuario">
+  <div id="bienvenida"></div>
+  <div id="menuUsuario"></div>
+</nav>
+
+<div id="barraUsuario" class="barra-usuario">
+  <div id="bienvenida"></div>
+  <div id="accionesUsuario"></div>
+</div>
+
+<div id="casas"></div>
+
+<script src="js/api.js"></script>
+<script src="js/casas.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const usuario = getUsuario();
+  const bienvenida = document.getElementById('bienvenida');
+  const acciones = document.getElementById('accionesUsuario');
+
+  if (!usuario) {
+    bienvenida.innerHTML = '';
+    acciones.innerHTML = `
+      <a href="login.html">Iniciar sesión</a>
+      <a href="registro.html">Registrarse</a>
+    `;
+    return;
+  }
+
+  bienvenida.innerHTML = `Bienvenido, <strong>${usuario.nombre}</strong>`;
+  acciones.innerHTML = `
+    <a href="favoritos.html">⭐ Favoritos</a>
+    <a href="#" onclick="logout()">Cerrar sesión</a>
+  `;
+});
+
+function logout() {
+  localStorage.removeItem('usuario');
+  location.href = 'index.html';
+}
+</script>
+
+
+
+  function logout() {
+    localStorage.removeItem('usuario');
+    location.href = 'index.html';
+  }
+</script>
+
+
+</body>
+</html>

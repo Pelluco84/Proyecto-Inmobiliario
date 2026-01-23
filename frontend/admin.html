@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h1>Panel de Administración</h1>
+
+<nav>
+  <button onclick="cargarUsuarios()">Gestión de usuarios</button>
+  <button onclick="cargarPropiedades()">Gestión de propiedades</button>
+  <button onclick="cargarSolicitudes()">Solicitudes</button>
+  <button onclick="formAgregarPropiedad()">Agregar propiedad</button>
+  <button onclick="logout()">Cerrar sesión</button>
+  
+
+</nav>
+
+ 
+
+
+
+<hr>
+
+<div id="contenido">
+  <p>Seleccione una opción del panel.</p>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

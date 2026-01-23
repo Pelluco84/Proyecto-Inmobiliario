@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recuperar contraseña</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h2>Recuperación de contraseña</h2>
+
+<p>
+  Ingresa tu correo electrónico y recibirás instrucciones
+  para restablecer tu contraseña.
+</p>
+
+<input type="email" placeholder="Correo electrónico"><br><br>
+
+<button onclick="simularRecuperacion()">Enviar</button>
+
+<p id="msg"></p>
+
+<script>
+function simularRecuperacion() {
+  document.getElementById('msg').innerText =
+    'Si el correo existe, recibirás instrucciones para recuperar tu contraseña.';
+
+  // Redirigir al login después de 3 segundos
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 3000);
+}
+
+</script>
+
+</body>
+</html>
