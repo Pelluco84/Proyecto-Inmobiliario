@@ -1,9 +1,13 @@
+// URL BASE DEL BACKEND EN RENDER
+const API_URL = 'https://backend-inmobiliaria-33m5.onrender.com/api';
 
-
+// CARGAR CASAS
 fetch(`${API_URL}/casas`)
   .then(res => res.json())
   .then(casas => {
     const div = document.getElementById('casas');
+    div.innerHTML = '';
+
     const usuario = getUsuario();
 
     casas.forEach(casa => {
@@ -12,60 +16,78 @@ fetch(`${API_URL}/casas`)
 
       let galeria = '';
 
-if (casa.imagenes && casa.imagenes.length > 0) {
-  casa.imagenes.forEach(img => {
-    galeria += `<img src="http://localhost:3000/img/${img}" class="img-casa">
-`;
+      // IMÁGENES
+      if (casa.imagenes && casa.imagenes.length > 0) {
+        casa.imagenes.forEach(img => {
+          galeria += `
+            <img 
+              src="https://backend-inmobiliaria-33m5.onrender.com/img/${img}" 
+              class="img-casa"
+            >
+          `;
+        });
+      } else {
+        galeria = `
+          <img 
+            src="https://backend-inmobiliaria-33m5.onrender.com/img/sin-imagen.jpg" 
+            class="img-casa"
+          >
+        `;
+      }
 
-  });
-} else {
-  galeria = `<img src="http://localhost:3000/img/sin-imagen.jpg" class="img-casa">
-`;
+      // CONTENIDO DE LA CASA
+      card.innerHTML = `
+        <div class="galeria">
+          ${galeria}
+        </div>
 
-}
+        <h3>${casa.titulo}</h3>
+        <p><strong>Descripción:</strong> ${casa.descripcion}</p>
+        <p><strong>Precio:</strong> $${casa.precio}</p>
+        <p><strong>Sector:</strong> ${casa.sector}</p>
+        <p><strong>Estado:</strong> ${casa.estado}</p>
+      `;
 
-card.innerHTML = `
-  <div class="galeria">
-    ${galeria}
-  </div>
-
-  <h3>${casa.titulo}</h3>
-  <p><strong>Descripción:</strong> ${casa.descripcion}</p>
-  <p><strong>Precio:</strong> $${casa.precio}</p>
-  <p><strong>Sector:</strong> ${casa.sector}</p>
-  <p><strong>Estado:</strong> ${casa.estado}</p>
-`;
-
+      // BOTONES SOLO SI HAY USUARIO LOGUEADO
       if (usuario) {
-  const favBtn = document.createElement('button');
-  favBtn.textContent = '⭐ Agregar a Favoritos';
-  favBtn.onclick = () => agregarFavorito(usuario.id_usuario, casa.id_casa);
+        const favBtn = document.createElement('button');
+        favBtn.textContent = '⭐ Agregar a Favoritos';
+        favBtn.onclick = () => agregarFavorito(usuario.id_usuario, casa.id_casa);
 
-  const contactoBtn = document.createElement('button');
-  contactoBtn.textContent = '📩 Solicitud de contacto';
-  contactoBtn.onclick = () => solicitarContacto(usuario.id_usuario, casa.id_casa);
+        const contactoBtn = document.createElement('button');
+        contactoBtn.textContent = '📩 Solicitud de contacto';
+        contactoBtn.onclick = () => solicitarContacto(usuario.id_usuario, casa.id_casa);
 
-  card.appendChild(favBtn);
-  card.appendChild(contactoBtn);
-}
+        card.appendChild(favBtn);
+        card.appendChild(contactoBtn);
+      }
 
       div.appendChild(card);
     });
+  })
+  .catch(err => {
+    console.error('Error al cargar casas:', err);
   });
 
+
+// AGREGAR A FAVORITOS
 function agregarFavorito(id_usuario, id_casa) {
   fetch(`${API_URL}/favoritos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_usuario, id_casa })
   })
-  .then(res => res.json())
-  .then(data => alert(data.mensaje));
+    .then(res => res.json())
+    .then(data => alert(data.mensaje))
+    .catch(err => {
+      console.error('Error al agregar favorito:', err);
+    });
 }
 
+
+// SOLICITAR CONTACTO
 function solicitarContacto(id_usuario, id_casa) {
   const mensaje = prompt('Ingrese su mensaje de contacto:');
-
   if (!mensaje) return;
 
   fetch(`${API_URL}/solicitudes`, {
@@ -73,8 +95,9 @@ function solicitarContacto(id_usuario, id_casa) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_usuario, id_casa, mensaje })
   })
-  .then(res => res.json())
-  .then(data => alert(data.mensaje));
+    .then(res => res.json())
+    .then(data => alert(data.mensaje))
+    .catch(err => {
+      console.error('Error al solicitar contacto:', err);
+    });
 }
-
-
