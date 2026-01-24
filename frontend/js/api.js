@@ -1,4 +1,5 @@
-const API_URL = 'https://backend-inmobiliaria-33m5.onrender.com';
+const API_URL = 'https://backend-inmobiliaria-33m5.onrender.com/api';
+
 
 function getUsuario() {
   const data = localStorage.getItem('usuario');

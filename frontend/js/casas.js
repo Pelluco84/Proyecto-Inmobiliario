@@ -1,7 +1,3 @@
-// URL BASE DEL BACKEND EN RENDER
-const API_URL = 'https://backend-inmobiliaria-33m5.onrender.com/api';
-
-// CARGAR CASAS
 fetch(`${API_URL}/casas`)
   .then(res => res.json())
   .then(casas => {
@@ -16,26 +12,18 @@ fetch(`${API_URL}/casas`)
 
       let galeria = '';
 
-      // IMÁGENES
       if (casa.imagenes && casa.imagenes.length > 0) {
         casa.imagenes.forEach(img => {
           galeria += `
-            <img 
-              src="https://backend-inmobiliaria-33m5.onrender.com/img/${img}" 
-              class="img-casa"
-            >
+            <img src="https://backend-inmobiliaria-33m5.onrender.com/img/${img}" class="img-casa">
           `;
         });
       } else {
         galeria = `
-          <img 
-            src="https://backend-inmobiliaria-33m5.onrender.com/img/sin-imagen.jpg" 
-            class="img-casa"
-          >
+          <img src="https://backend-inmobiliaria-33m5.onrender.com/img/sin-imagen.jpg" class="img-casa">
         `;
       }
 
-      // CONTENIDO DE LA CASA
       card.innerHTML = `
         <div class="galeria">
           ${galeria}
@@ -48,7 +36,6 @@ fetch(`${API_URL}/casas`)
         <p><strong>Estado:</strong> ${casa.estado}</p>
       `;
 
-      // BOTONES SOLO SI HAY USUARIO LOGUEADO
       if (usuario) {
         const favBtn = document.createElement('button');
         favBtn.textContent = '⭐ Agregar a Favoritos';
@@ -65,12 +52,9 @@ fetch(`${API_URL}/casas`)
       div.appendChild(card);
     });
   })
-  .catch(err => {
-    console.error('Error al cargar casas:', err);
-  });
+  .catch(err => console.error('Error al cargar casas:', err));
 
 
-// AGREGAR A FAVORITOS
 function agregarFavorito(id_usuario, id_casa) {
   fetch(`${API_URL}/favoritos`, {
     method: 'POST',
@@ -79,13 +63,10 @@ function agregarFavorito(id_usuario, id_casa) {
   })
     .then(res => res.json())
     .then(data => alert(data.mensaje))
-    .catch(err => {
-      console.error('Error al agregar favorito:', err);
-    });
+    .catch(err => console.error(err));
 }
 
 
-// SOLICITAR CONTACTO
 function solicitarContacto(id_usuario, id_casa) {
   const mensaje = prompt('Ingrese su mensaje de contacto:');
   if (!mensaje) return;
@@ -97,7 +78,5 @@ function solicitarContacto(id_usuario, id_casa) {
   })
     .then(res => res.json())
     .then(data => alert(data.mensaje))
-    .catch(err => {
-      console.error('Error al solicitar contacto:', err);
-    });
+    .catch(err => console.error(err));
 }
