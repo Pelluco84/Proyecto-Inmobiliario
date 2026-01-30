@@ -21,7 +21,8 @@ router.get('/', (req, res) => {
       GROUP_CONCAT(i.url_imagen ORDER BY i.id_imagen) AS imagenes
     FROM casa c
     LEFT JOIN imagen i ON c.id_casa = i.id_casa
-    WHERE 1=1
+    WHERE c.estado <> 'eliminada'
+
   `;
 
   const params = [];
